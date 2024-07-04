@@ -1,0 +1,19 @@
+This is the readme for the second phase of the project.
+
+This entails working with data from hydra sensors (which are recorded for longer time from 2010) and applying deep learners for the task of soil moisture anomaly detection. Work was also ported from shiva server to AWS.
+
+- Firstly, Hydra data was ported from shiva to S3. Due to the size of data to be stored, the data is stored in the form of multiple parquet files, each file corresponding to a station.
+
+Data path: s3://uscrn-soilmoisture-ml/shiva/hydra/  (s3://uscrn-soilmoisture-ml/shiva/hydra/preprocessed_data_for_leave_1_out_1/)
+
+- The dataset is converted into parquet and all data is plotted in the notebook : hydra_visualizations.ipynb 
+
+- Detailed data exploration steps which includes finding missing values, experimenting diffeent time series pre-procssing steps like differencing and preprocessing to remove stations with lot of NULL data and so on are performed in the notebook : hydra_exploration.ipynb
+
+- Since there are multiple precipitation columns such as wetness1, wetness2 and precip, they can be visualized using precip_visualization.ipynb.
+
+- The final data preprocessing which include, normal standardization and climatology preprocessing are documented in preprocessing_pipelines.ipynb
+
+Given the requirement of identifying the sensor and timestamp of an anomaly ,the first approach was an "image segmentation " style approach.
+A 2D input is taken with a time range(128 hrs) as y axis and the sensors as x axis. It is passed through a UNET model and the output is a label for each row,column value (thought of as a pixel). 
+First, input data was passed station wise in the same order every epoch. Then to induce shuffling, the order of stations was shuffled at the start of each epoch. Finally, as the input is not thought of as a continuous time series but rather multiple snapshots of time, each snapshot is shuffled across stations/time and fed to the model as input.
