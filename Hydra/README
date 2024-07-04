@@ -1,6 +1,6 @@
 This is the readme for the second phase of the project.
 
-This entails working with data from hydra sensors (which are recorded for longer time from 2010) and applying deep learners for the task of soil moisture anomaly detection. Work was also ported from shiva server to AWS.
+This which entails working with data from hydra sensors (which are recorded for longer time from 2010) and applying deep learners for the task of soil moisture anomaly detection. Work was also ported from shiva server to AWS.
 
 - Firstly, Hydra data was ported from shiva to S3. Due to the size of data to be stored, the data is stored in the form of multiple parquet files, each file corresponding to a station.
 
